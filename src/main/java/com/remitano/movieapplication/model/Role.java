@@ -1,18 +1,16 @@
 package com.remitano.movieapplication.model;
 
-import lombok.Data;
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.persistence.*;
-
-@Data
-@Entity
-@Table(name = "roles")
+@Getter
+@Setter
+@Document(collection = "roles")
 public class Role {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(length = 60)
+    private ObjectId id;
     private String name;
 }

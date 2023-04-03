@@ -38,9 +38,9 @@ public class SecurityConfig {
 
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
-                        //authorize.anyRequest().authenticated()
-                        authorize.requestMatchers(HttpMethod.GET, "movies/api/**").permitAll()
-                                .requestMatchers("/movies/api/auth/**").permitAll()
+                        authorize.requestMatchers(HttpMethod.GET, "/movies/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/movies/**").permitAll()
+                                .requestMatchers("/movies/auth/**").permitAll()
                                 .anyRequest().authenticated()
 
                 );

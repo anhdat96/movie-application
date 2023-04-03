@@ -2,6 +2,7 @@ package com.remitano.movieapplication.exception;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.remitano.movieapplication.constans.Constants;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,10 +22,8 @@ import java.util.List;
 
 @PropertySource("classpath:error.properties")
 @RestControllerAdvice
-public final class CustomExceptionHandler  extends ResponseEntityExceptionHandler {
+public final class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomExceptionHandler.class);
-    private static final int INTERNAL_SERVER_ERROR_CODE = 9999;
-    private static final String INTERNAL_SERVER_ERROR_MSG = "Internal Server Error";
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Autowired
@@ -59,13 +58,13 @@ public final class CustomExceptionHandler  extends ResponseEntityExceptionHandle
             LOGGER.info("errorMsg {}", errorMsg);
             httpCode = getHttpCode(getConfigValue(customException.getMessage()));
 
-            errorList.add(null != errorMsg ? errorMsg : INTERNAL_SERVER_ERROR_MSG);
+            errorList.add(null != errorMsg ? errorMsg : Constants.INTERNAL_SERVER_ERROR_MSG);
             errorDetails = new ErrorMessage(Integer.parseInt(customException.getMessage()), errorList);
 
         } catch (final Exception ex) {
             LOGGER.error("Unable to process error message {}", customException, ex);
-            errorList.add(INTERNAL_SERVER_ERROR_MSG);
-            errorDetails = new ErrorMessage(INTERNAL_SERVER_ERROR_CODE, errorList);
+            errorList.add(Constants.INTERNAL_SERVER_ERROR_MSG);
+            errorDetails = new ErrorMessage(Constants.INTERNAL_SERVER_ERROR_CODE, errorList);
         }
 
         return new ResponseEntity<>(errorDetails, null != httpCode ? HttpStatus.valueOf(httpCode) : HttpStatus.INTERNAL_SERVER_ERROR);

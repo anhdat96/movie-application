@@ -3,7 +3,7 @@ package com.remitano.movieapplication.model.dto;
 import lombok.Data;
 
 @Data
-public class LoginDto {
-    private String usernameOrEmail;
+public class LoginDTO {
+    private String email;
     private String password;
 }
