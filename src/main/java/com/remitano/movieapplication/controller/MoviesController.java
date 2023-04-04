@@ -28,7 +28,7 @@ public class MoviesController {
     }
 
     @PostMapping(value = "/share-movies")
-    public ResponseEntity<Movies> shareMovies(@RequestBody @Valid MoviesDTO moviesDTO) {
+    public ResponseEntity<MoviesDTO> shareMovies(@RequestBody @Valid MoviesDTO moviesDTO) {
         LOGGER.info("Request to share a movie");
         return new ResponseEntity<>(moviesService.shareMovies(moviesDTO), HttpStatus.OK);
     }
