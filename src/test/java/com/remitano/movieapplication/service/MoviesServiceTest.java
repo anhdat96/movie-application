@@ -1,36 +1,30 @@
 package com.remitano.movieapplication.service;
 
 import com.remitano.movieapplication.model.Movies;
-import com.remitano.movieapplication.model.User;
 import com.remitano.movieapplication.model.dto.MoviesDTO;
 import com.remitano.movieapplication.repository.MoviesRepository;
-import com.remitano.movieapplication.repository.RoleRepository;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class MoviesServiceTest {
     @Mock
     private MoviesRepository moviesRepository;
-    @Mock
-    private RoleRepository roleRepository;
     @InjectMocks
-    private MoviesService moviesService ;
+    private MoviesService moviesService;
 
     @BeforeEach
     public void beforeSetup() {
@@ -71,6 +65,28 @@ public class MoviesServiceTest {
         MoviesDTO result = moviesService.shareMovies(moviesDTO);
 
         assertNotNull(moviesService.getAllMovies());
-        assertEquals(movie.getId().toString(),result.getId());
+        assertEquals(movie.getId().toString(), result.getId());
+    }
+
+    @DisplayName("Test voteMovies() method")
+    @Test
+    void shouldVoteMoviesSuccessful() {
+        MoviesDTO moviesDTO = new MoviesDTO();
+        moviesDTO.setId("5afea3b5bc7f8d04fc61d525");
+        moviesDTO.setTitle("testing movie");
+        moviesDTO.setUrl("https://www.youtube.com/watch?v=6ZfuNTqbHE8");
+        moviesDTO.setLikeVoted(true);
+        moviesDTO.setShareBy("ydat1343@gmail.com");
+
+        Movies movie = new Movies();
+        movie.setId(new ObjectId());
+        movie.setTitle("testing movie");
+        movie.setUrl("https://www.youtube.com/watch?v=6ZfuNTqbHE8");
+
+        when(moviesRepository.findById(any())).thenReturn(java.util.Optional.of(movie));
+        when(moviesRepository.save(any())).thenReturn(movie);
+        Movies result = moviesService.voteMovies(moviesDTO);
+
+        assertEquals(movie.getShareBy(), result.getShareBy());
     }
 }
