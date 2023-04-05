@@ -14,7 +14,7 @@
 	<name>movie-application</name>
 	<description>movie-application</description>
 	<properties>
-		<java.version>20</java.version>
+		<java.version>19</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
