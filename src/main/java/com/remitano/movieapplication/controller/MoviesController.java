@@ -15,6 +15,7 @@ import java.util.List;
 
 @RequestMapping("/${spring.application.name}")
 @RestController
+@CrossOrigin
 public class MoviesController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MoviesController.class);
