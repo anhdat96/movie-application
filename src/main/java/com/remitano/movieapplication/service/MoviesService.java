@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MoviesService {
@@ -23,7 +24,46 @@ public class MoviesService {
 
     public List<Movies> getAllMovies() {
         LOGGER.info("Get all movies");
-        return moviesRepository.findAll();
+        List<Movies> result = moviesRepository.findAll();
+        List<MoviesDTO> response = new ArrayList<>();
+
+        result.stream().map(movies ->
+            movies.getId().toString()).collect(Collectors.toList());
+        for (Movies movie: result){
+            MoviesDTO moviesDTO = new MoviesDTO();
+            if(movie.getId() != null){
+                moviesDTO.setId(movie.getId().toString());
+            }
+
+            if(movie.getTitle() != null){
+                moviesDTO.setTitle(movie.getTitle());
+            }
+
+            if(movie.getUrl() != null){
+                moviesDTO.setUrl(movie.getUrl());
+            }
+
+            if(movie.getShareBy() != null){
+                moviesDTO.setShareBy(movie.getShareBy());
+            }
+
+            if(movie.getDescription() != null){
+                moviesDTO.setDescription(movie.getDescription());
+            }
+
+            if(!StringUtils.isEmpty(movie.getDislikeListUser())){
+                moviesDTO.setDislikeListUserDTO(movie.getDislikeListUser());
+            }
+
+            if(!StringUtils.isEmpty(movie.getLikeListUser())){
+                moviesDTO.setLikeListUserDTO(movie.getLikeListUser());
+            }
+            response.add(moviesDTO);
+        }
+
+
+
+        return result;
     }
 
     public MoviesDTO shareMovies(MoviesDTO moviesDTO) {
@@ -43,8 +83,12 @@ public class MoviesService {
 
     private MoviesDTO mapMoviesToMoviesDTO(MoviesDTO moviesDTO, Movies moviesResult) {
         moviesDTO.setId(moviesResult.getId().toString());
-        moviesDTO.setUrl(moviesResult.getUrl());
-        moviesDTO.setShareBy(moviesResult.getShareBy());
+        if(moviesResult.getUrl() != null){
+            moviesDTO.setUrl(moviesResult.getUrl());
+        }
+        if(moviesResult.getShareBy() != null){
+            moviesDTO.setShareBy(moviesResult.getShareBy());
+        }
         return moviesDTO;
 
     }
