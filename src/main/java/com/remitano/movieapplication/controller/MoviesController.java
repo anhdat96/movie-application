@@ -12,10 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-@RequestMapping("/${spring.application.name}")
 @RestController
 @CrossOrigin
+@RequestMapping("/${spring.application.name}")
 public class MoviesController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MoviesController.class);
@@ -25,6 +24,7 @@ public class MoviesController {
     @GetMapping(value = "/get-movies")
     public ResponseEntity<List<MoviesDTO>> getAllMovies() {
         LOGGER.info("Request to get all movies");
+
         return new ResponseEntity<>(moviesService.getAllMovies(), HttpStatus.OK);
     }
 
