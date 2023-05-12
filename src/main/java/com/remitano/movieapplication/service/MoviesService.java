@@ -22,7 +22,7 @@ public class MoviesService {
     @Autowired
     private MoviesRepository moviesRepository;
 
-    public List<Movies> getAllMovies() {
+    public List<MoviesDTO> getAllMovies() {
         LOGGER.info("Get all movies");
         List<Movies> result = moviesRepository.findAll();
         List<MoviesDTO> response = new ArrayList<>();
@@ -63,7 +63,7 @@ public class MoviesService {
 
 
 
-        return result;
+        return response;
     }
 
     public MoviesDTO shareMovies(MoviesDTO moviesDTO) {

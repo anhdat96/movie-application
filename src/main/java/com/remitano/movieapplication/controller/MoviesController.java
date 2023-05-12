@@ -23,7 +23,7 @@ public class MoviesController {
     private MoviesService moviesService;
 
     @GetMapping(value = "/get-movies")
-    public ResponseEntity<List<Movies>> getAllMovies() {
+    public ResponseEntity<List<MoviesDTO>> getAllMovies() {
         LOGGER.info("Request to get all movies");
         return new ResponseEntity<>(moviesService.getAllMovies(), HttpStatus.OK);
     }
