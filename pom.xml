@@ -11,10 +11,11 @@
 	<groupId>com.remitano</groupId>
 	<artifactId>movie-application</artifactId>
 	<version>0.0.1</version>
+	<packaging>jar</packaging>
 	<name>movie-application</name>
 	<description>movie-application</description>
 	<properties>
-		<java.version>19</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -79,6 +80,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>movie-application</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
